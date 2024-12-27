@@ -27,7 +27,7 @@
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     id: userData.id,
-                    username: userData.username,
+                    username: userData.username ?? userData.first_name,
                     is_bot: userData.is_bot ?? false,
                     is_premium: userData.is_premium ?? false,
                     allows_write_to_pm: userData.allows_write_to_pm,
