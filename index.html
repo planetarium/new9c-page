@@ -53,8 +53,8 @@
                 console.log("Connection failed: " + result.message);
             }
             token = result.token;
-            MyGameInstance.SendMessage("APIClient", "SetToken", "Bearer " + result.token);
             MyGameInstance.SendMessage("APIClient", "SetUri", host);
+            MyGameInstance.SendMessage("APIClient", "SetToken", "Bearer " + result.token);
         }
     </script>
 
