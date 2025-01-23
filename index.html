@@ -2,66 +2,13 @@
 <html lang="en-us">
 <head>
     <style>
-        .webgl-content * {border: 0; margin: 0; padding: 0}
-        .webgl-content {top: 0; left: 0;}
-
-        .webgl-content .logo, .progress {position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}
-        .webgl-content .logo {background: url('progressLogo.Light.png') no-repeat center / contain; width: 154px; height: 130px;}
-        .webgl-content .progress {height: 18px; width: 141px; margin-top: 90px;}
-        .webgl-content .progress .empty {background: url('progressEmpty.Light.png') no-repeat right / cover; float: right; width: 100%; height: 100%; display: inline-block;}
-        .webgl-content .progress .full {background: url('progressFull.Light.png') no-repeat left / cover; float: left; width: 0%; height: 100%; display: inline-block;}
-
-        .webgl-content .logo.Dark {background-image: url('progressLogo.Dark.png');}
-        .webgl-content .progress.Dark .empty {background-image: url('progressEmpty.Dark.png');}
-        .webgl-content .progress.Dark .full {background-image: url('progressFull.Dark.png');}
-
-        .webgl-content .footer {margin-top: 5px; height: 38px; line-height: 38px; font-family: Helvetica, Verdana, Arial, sans-serif; font-size: 18px;} 
-        .webgl-content .footer .webgl-logo, .title, .fullscreen {height: 100%; display: inline-block; background: transparent center no-repeat;} 
-        .webgl-content .footer .webgl-logo {background-image: url('webgl-logo.png'); width: 204px; float: left;}
-        .webgl-content .footer .title {margin-right: 10px; float: right;}
-        .webgl-content .footer .fullscreen {background-image: url('fullscreen.png'); width: 38px; float: right;}
-
-        body, html{
-            margin:0;
-            padding:0;
-        }
-
-        #gameContainer canvas{
-            position:absolute;
-            transform:translate(-50%, -50%);
-            top:50%;
-            left:50%;
-
-        }
-
-        .simmer{
-            position:absolute;
-            bottom:10px;
-            right:10px;
-            color:#aaa;
-            font-size:9px;
-            font-family:sans-serif;
-            font-family:sans-serif;
-
-            /*want to remove the simmer branding? uncomment display:none below!*/
-            /*display:none;*/
-        }
-
-        .simmer a{
-            color:#cccccc;
-            text-decoration:none;
-            font-size:12px;
-            transition:opacity 3s;
-
-        }
-
-        .simmer a:hover{
-            color:#fff;
-            text-decoration:underline;
-        }
-
-        .simmer.hide {
-            opacity:0;
+        canvas {
+            width: min(calc(100vh * (9/16)), 100vw);
+            max-width: 100%;
+            max-height: 100%;
+            height: auto;
+            aspect-ratio: 9/16;
+            display: block;
         }
     </style>
     <meta charset="utf-8">
@@ -130,25 +77,10 @@
 </head>
 <body style="text-align: center; padding: 0; border: 0; margin: 0;">
 <canvas id="unity-canvas"tabindex="-1"
-style="width:300px; height:500px; background: #805C65"></canvas>
+        style="background: #805C65"></canvas>
 <script src="Build/Build.loader.js"></script>
 <script>
     // Unity Game
-    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-        // var meta = document.createElement('meta');
-        // meta.name = 'viewport';
-        // meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        // document.getElementsByTagName('head')[0].appendChild(meta);
-
-        // var canvas = document.querySelector("#unity-canvas");
-        // canvas.style.width = "100%";
-        // canvas.style.height = "100%";
-        // canvas.style.position = "fixed";
-
-        // document.body.style.textAlign =  "left";
-    }
-
     createUnityInstance(document.querySelector("#unity-canvas"), {
         arguments: [],
         dataUrl: "Build/public.data",
@@ -164,82 +96,6 @@ style="width:300px; height:500px; background: #805C65"></canvas>
         MyGameInstance = instance;
         sendUserDataToServer();
     });
-</script>
-<script>
-    (function(){
-        console.log('Responsive WebGL Template by SIMMER.io v2019.02.08');
-        console.log('Available at: https://assetstore.unity.com/packages/tools/gui/responsive-webgl-template-117308 for free!');
-        console.log('Host your WebGL Game at SIMMER.io for free!');
-
-        const q = (selector) => document.querySelector(selector);
-
-        const gameContainer = q('#unity-canvas');
-
-        const initialDimensions = {width: parseInt(gameContainer.style.width, 10), height: parseInt(gameContainer.style.height, 10)};
-        gameContainer.style.width = '100%';
-        gameContainer.style.height = '100%';
-
-        let gCanvasElement = null;
-
-        const getCanvasFromMutationsList = (mutationsList) => {
-            for (let mutationItem of mutationsList){
-                for (let addedNode of mutationItem.addedNodes){
-                    if (addedNode.id === '#canvas'){
-                        return addedNode;
-                    }
-                }
-            }
-            return null;
-        }
-
-        const setDimensions = () => {
-            gameContainer.style.position = 'absolute';
-            gCanvasElement.style.display = 'none';
-            var winW = parseInt(window.getComputedStyle(gameContainer).width, 10);
-            var winH = parseInt(window.getComputedStyle(gameContainer).height, 10);
-            var scale = Math.min(winW / initialDimensions.width, winH / initialDimensions.height);
-            gCanvasElement.style.display = '';
-            gCanvasElement.style.width = 'auto';
-            gCanvasElement.style.height = 'auto';
-
-            var fitW = Math.round(initialDimensions.width * scale * 100) / 100;
-            var fitH = Math.round(initialDimensions.height * scale * 100) / 100;
-
-            gCanvasElement.setAttribute('width', fitW);
-            gCanvasElement.setAttribute('height', fitH);
-        }
-
-        window.setDimensions = setDimensions;
-
-        const registerCanvasWatcher = () => {
-            let debounceTimeout = null;
-            const debouncedSetDimensions = () => {
-                if (debounceTimeout !== null) {
-                    clearTimeout(debounceTimeout);
-                }
-                debounceTimeout = setTimeout(setDimensions, 200);
-            }
-            window.addEventListener('resize', debouncedSetDimensions, false);
-            setDimensions();
-        }
-
-        const i = 0;
-        new MutationObserver(function (mutationsList) {
-            const canvas = getCanvasFromMutationsList(mutationsList)
-            if (canvas){
-                gCanvasElement = canvas;
-                registerCanvasWatcher();
-
-                new MutationObserver(function (attributesMutation) {
-                    this.disconnect();
-                    setTimeout(setDimensions, 1)
-                    q('.simmer').classList.add('hide');
-                }).observe(canvas, {attributes:true});
-
-                this.disconnect();
-            }
-        }).observe(gameContainer, {childList:true});
-    })();
 </script>
 </body>
 </html>
