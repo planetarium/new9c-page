@@ -1,101 +1,63 @@
 <!DOCTYPE html>
 <html lang="en-us">
-    <head>
-        <style>
-            canvas {
-                width: min(calc(100vh * (9/16)), 100vw);
-                max-width: 100%;
-                max-height: 100%;
-                height: auto;
-                aspect-ratio: 9/16;
-                display: block;
-            }
-        </style>
-        <meta charset="utf-8">
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Unity Web Player | proto</title>
-        <script>
-            const host = "https://5hxextbfd7.execute-api.ap-northeast-2.amazonaws.com/proto";
-            // const host = "http://localhost:3407";
-        </script>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity Web Player | proto</title>
+    <script>
+        const host = "https://5hxextbfd7.execute-api.ap-northeast-2.amazonaws.com/proto";
+        // const host = "http://localhost:3407";
+    </script>
 
-        <script src="https://telegram.org/js/telegram-web-app.js"></script>
-        <script>
-            let token = "";
-        </script>
-        <script>
-            // Telegram
-            console.log("Start telegram");
-            // Initialize Telegram Web App
-            Telegram.WebApp.ready();
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="telegram.js"></script>
+    <script>
+        // Move pages
+        const movePage = (pageName) => {
+            window.open(`${host}/${pageName}#${token}`);
+        };
+    </script>
+</head>
+<body style="text-align: center; padding: 0; border: 0; margin: 0;">
+<div class="buttons">
+    <button id="shop" onclick="movePage('shop')">Go to shop</button>
+    <button id="quest" onclick="movePage('quest')">Go to quest</button>
+</div>
+<canvas id="unity-canvas" width=600 height=960 tabindex="-1"
+        style="width: 600px; height: 960px; background: #805C65"></canvas>
+<script src="Build/Build.loader.js"></script>
+<script>
+    // Unity Game
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
 
-            // Get User Data
-            const initData = Telegram.WebApp.initDataUnsafe;
-            const userData = initData.user;
-            let MyGameInstance;
+        var canvas = document.querySelector("#unity-canvas");
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+        canvas.style.position = "fixed";
 
-            // Example of sending user data to your server
-            async function sendUserDataToServer() {
-                // if (!userData) {
-                //     alert("User data not available.");
-                //     return;
-                // }
-                const response = await fetch(`${host}/api/auth/login/telegram`, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        id: userData.id,
-                        username: userData.username ?? userData.first_name,
-                        is_bot: userData.is_bot ?? false,
-                        is_premium: userData.is_premium ?? false,
-                        allows_write_to_pm: userData.allows_write_to_pm,
-                        photo_url: userData.photo_url ?? "",
-                    }),
-                });
+        document.body.style.textAlign = "left";
+    }
 
-                const result = await response.json();
-                console.log("=======");
-                console.log(result);
-                console.log("=======");
-                if (response.success) {
-                    console.log("Connected successfully!");
-                } else {
-                    console.log("Connection failed: " + result.message);
-                }
-                token = result.token;
-                MyGameInstance.SendMessage("APIClient", "SetUri", host);
-                MyGameInstance.SendMessage("APIClient", "SetToken", "Bearer " + result.token);
-            }
-        </script>
-
-        <script>
-            // Move pages
-            const movePage = (pageName) => {
-                window.open(`${host}/${pageName}#${token}`);
-            };
-        </script>
-    </head>
-    <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-        <canvas id="unity-canvas"tabindex="-1"
-                style="background: #805C65"></canvas>
-        <script src="Build/Build.loader.js"></script>
-            <script>
-                // Unity Game
-                createUnityInstance(document.querySelector("#unity-canvas"), {
-                    arguments: [],
-                    dataUrl: "Build/public.data",
-                    frameworkUrl: "Build/public.framework.js",
-                    codeUrl: "Build/public.wasm",
-                    streamingAssetsUrl: "StreamingAssets",
-                    companyName: "pl",
-                    productName: "proto",
-                    productVersion: "1.0",
-                    // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-                    // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
-                }).then(instance => {
-                    MyGameInstance = instance;
-                    sendUserDataToServer();
-                });
-            </script>
-    </body>
+    createUnityInstance(document.querySelector("#unity-canvas"), {
+        arguments: [],
+        dataUrl: "Build/public.data",
+        frameworkUrl: "Build/public.framework.js",
+        codeUrl: "Build/public.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "pl",
+        productName: "proto",
+        productVersion: "1.0",
+        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+    }).then(instance => {
+        MyGameInstance = instance;
+        sendUserDataToServer();
+    });
+</script>
+</body>
 </html>

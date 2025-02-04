@@ -1,0 +1,45 @@
+// Telegram
+console.log("Start telegram");
+// Initialize Telegram Web App
+Telegram.WebApp.ready();
+
+// Get User Data
+const initData = Telegram.WebApp.initDataUnsafe;
+const userData = initData.user;
+let MyGameInstance;
+
+// Example of sending user data to your server
+async function sendUserDataToServer() {
+    if (!userData) {
+        console.log("User data not available.");
+        document.getElementById("tg-login").hidden = false;
+    } else {
+        const response = await fetch(`${host}/api/auth/login/telegram`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id: userData.id,
+                username: userData.username ?? userData.first_name,
+                is_bot: userData.is_bot ?? false,
+                is_premium: userData.is_premium ?? false,
+                allows_write_to_pm: userData.allows_write_to_pm,
+                photo_url: userData.photo_url ?? "",
+            }),
+        });
+    }
+
+    const result = await response.json();
+    console.log("=======");
+    console.log(result);
+    console.log("=======");
+    if (response.success) {
+        console.log("Connected successfully!");
+    } else {
+        console.log("Connection failed: " + result.message);
+    }
+    token = result.token;
+    MyGameInstance.SendMessage("APIClient", "SetToken", "Bearer " + result.token);
+    MyGameInstance.SendMessage("APIClient", "SetUri", host);
+}
+
+
