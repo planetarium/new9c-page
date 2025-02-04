@@ -6,13 +6,11 @@ Telegram.WebApp.ready();
 // Get User Data
 const initData = Telegram.WebApp.initDataUnsafe;
 const userData = initData.user;
-let MyGameInstance;
 
-// Example of sending user data to your server
 async function sendUserDataToServer() {
     if (!userData) {
         console.log("User data not available.");
-        document.getElementById("tg-login").hidden = false;
+        document.getElementById("login-button").style = "display:block";
     } else {
         const response = await fetch(`${host}/api/auth/login/telegram`, {
             method: 'POST',
@@ -26,20 +24,25 @@ async function sendUserDataToServer() {
                 photo_url: userData.photo_url ?? "",
             }),
         });
-    }
 
-    const result = await response.json();
-    console.log("=======");
-    console.log(result);
-    console.log("=======");
-    if (response.success) {
-        console.log("Connected successfully!");
-    } else {
-        console.log("Connection failed: " + result.message);
+        const result = await response.json();
+        console.log("=======");
+        console.log(result);
+        console.log("=======");
+        if (response.success) {
+            console.log("Connected successfully!");
+        } else {
+            console.log("Connection failed: " + result.message);
+        }
+        token = result.token;
+        MyGameInstance.SendMessage("APIClient", "SetToken", "Bearer " + result.token);
+        MyGameInstance.SendMessage("APIClient", "SetUri", host);
     }
-    token = result.token;
-    MyGameInstance.SendMessage("APIClient", "SetToken", "Bearer " + result.token);
-    MyGameInstance.SendMessage("APIClient", "SetUri", host);
 }
 
+const telegramLogin = async() => {
+    alert("login")
+};
 
+window.sendUserDataToServer = sendUserDataToServer;
+window.telegramLogin = telegramLogin;
