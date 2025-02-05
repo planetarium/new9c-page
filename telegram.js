@@ -58,10 +58,10 @@ async function telegramLogin(unityInstance) {
     console.log("=======");
     console.log(result);
     console.log("=======");
-    if (response.success) {
+    if (response.status === 200 && result.token) {
         console.log("Connected successfully!");
     } else {
-        console.log("Connection failed: " + result.message);
+        console.log("Connection failed: " + JSON.stringify(result));
     }
     token = result.token;
     unityInstance.SendMessage("APIClient", "SetToken", "Bearer " + result.token);
