@@ -45,8 +45,8 @@
             data-size="medium"
             data-userpic="false"
             data-onauth="onTelegramAuth(user)"></script>
-    <button id="shop" onclick="movePage('shop')">Go to shop</button>
-    <button id="quest" onclick="movePage('quest')">Go to quest</button>
+    <!-- <button id="shop" onclick="movePage('shop')">Go to shop</button>
+    <button id="quest" onclick="movePage('quest')">Go to quest</button> -->
 </div>
 <canvas id="unity-canvas" tabindex="-1"
         style="background: #805C65"></canvas>
@@ -66,7 +66,7 @@
             canvas.style.height = "100%";
             canvas.style.position = "fixed";
 
-            document.body.style.textAlign = "left";
+            document.body.style.textAlign = "center";
         }
 
         createUnityInstance(document.querySelector("#unity-canvas"), {
