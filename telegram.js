@@ -7,7 +7,7 @@ Telegram.WebApp.ready();
 const initData = Telegram.WebApp.initDataUnsafe;
 const userData = initData.user;
 
-async function sendUserDataToServer() {
+async function sendUserDataToServer(unityInstance) {
     if (!userData) {
         console.log("User data not available.");
         document.getElementById("login-button").style = "display:block";
@@ -35,8 +35,8 @@ async function sendUserDataToServer() {
             console.log("Connection failed: " + result.message);
         }
         token = result.token;
-        MyGameInstance.SendMessage("APIClient", "SetToken", "Bearer " + result.token);
-        MyGameInstance.SendMessage("APIClient", "SetUri", host);
+        unityInstance.SendMessage("APIClient", "SetToken", "Bearer " + result.token);
+        unityInstance.SendMessage("APIClient", "SetUri", host);
     }
 }
 

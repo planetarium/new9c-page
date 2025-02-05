@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
+    <style>
+        canvas {
+            width: min(calc(100vh * (9/16)), 100vw);
+            max-width: 100%;
+            max-height: 100%;
+            height: auto;
+            aspect-ratio: 9/16;
+            display: block;
+        }
+    </style>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity Web Player | proto</title>
@@ -17,7 +27,6 @@
 <!--            data-request-access="write"></script>-->
     <script>
         let token;
-        let MyGameInstance;
         // Move pages
         const movePage = (pageName) => {
             window.open(`${host}/${pageName}#${token}`);
@@ -39,8 +48,8 @@
     <button id="shop" onclick="movePage('shop')">Go to shop</button>
     <button id="quest" onclick="movePage('quest')">Go to quest</button>
 </div>
-<canvas id="unity-canvas" width=600 height=960 tabindex="-1"
-        style="width: 600px; height: 960px; background: #805C65"></canvas>
+<canvas id="unity-canvas" tabindex="-1"
+        style="background: #805C65"></canvas>
 <script src="Build/Build.loader.js"></script>
 <script>
     window.addEventListener('load', () => {
@@ -72,8 +81,7 @@
             // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
             // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
         }).then(instance => {
-            MyGameInstance = instance;
-            sendUserDataToServer();
+            sendUserDataToServer(instance);
         });
     });
 </script>
