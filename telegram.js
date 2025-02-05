@@ -7,7 +7,7 @@ Telegram.WebApp.ready();
 const initData = Telegram.WebApp.initDataUnsafe;
 let userData = initData.user;
 
-export const checkTelegramData = () => {
+const checkTelegramData = () => {
     if (!userData) {
         console.log("User data not available.");
         document.getElementById("modal").style.visibility = "visible";
@@ -16,7 +16,7 @@ export const checkTelegramData = () => {
 
 };
 
-export const onTelegramLogin = async (user) => {
+const onTelegramLogin = async (user) => {
     const resp = await fetch(`${host}.api/auth/validate-telegram`,
         {
             method: "POST",
