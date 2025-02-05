@@ -2,12 +2,15 @@
 console.log("Start telegram");
 // Initialize Telegram Web App
 Telegram.WebApp.ready();
+console.log("Telegram webapp ready");
 
 // Get User Data
 const initData = Telegram.WebApp.initDataUnsafe;
 let userData = initData.user;
+console.log(userData);
 
 const checkTelegramData = () => {
+    console.log("checkTelegramData");
     if (!userData) {
         console.log("User data not available.");
         document.getElementById("modal").style.visibility = "visible";
@@ -17,6 +20,7 @@ const checkTelegramData = () => {
 };
 
 const onTelegramLogin = async (user) => {
+    console.log("onTelegramLogin");
     const resp = await fetch(`${host}/api/auth/validate-telegram`,
         {
             method: "POST",
@@ -35,6 +39,7 @@ const onTelegramLogin = async (user) => {
 }
 
 async function telegramLogin(unityInstance) {
+    console.log("telegramLogin with unity");
     const response = await fetch(`${host}/api/auth/login/telegram`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
