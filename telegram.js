@@ -17,7 +17,7 @@ const checkTelegramData = () => {
 };
 
 const onTelegramLogin = async (user) => {
-    const resp = await fetch(`${host}.api/auth/validate-telegram`,
+    const resp = await fetch(`${host}/api/auth/validate-telegram`,
         {
             method: "POST",
             headers: {"Content-Type": "application/json"},
