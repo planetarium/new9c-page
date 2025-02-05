@@ -16,7 +16,8 @@ const checkTelegramData = () => {
         document.getElementById("modal").style.visibility = "visible";
         return false;
     }
-
+    console.log("data found");
+    return true;
 };
 
 const onTelegramLogin = async (user) => {
