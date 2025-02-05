@@ -37,6 +37,7 @@ async function sendUserDataToServer(unityInstance) {
         token = result.token;
         unityInstance.SendMessage("APIClient", "SetUri", host);
         unityInstance.SendMessage("APIClient", "SetToken", "Bearer " + result.token);
+        unityInstance.SendMessage("APIClient", "Initialize");
     }
 }
 
