@@ -45,6 +45,7 @@ async function telegramLogin(unityInstance) {
             is_premium: userData.is_premium ?? false,
             allows_write_to_pm: userData.allows_write_to_pm,
             photo_url: userData.photo_url ?? "",
+            hash: null
         }),
     });
 
