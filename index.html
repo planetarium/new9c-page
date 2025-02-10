@@ -26,24 +26,23 @@
     </style>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<!--    <meta name="referrer" content="no-referrer-when-downgrade">-->
     <title>Unity Web Player | proto</title>
     <script>
         const host = "https://petpop-internal.9c.gg";
-        // const host = "https://397e-222-101-38-84.ngrok-free.app";
+        // const host = "http://localhost:3407";
     </script>
 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<!--    <script src="https://telegram.org/js/telegram-web-app.js"></script>-->
     <script>
         let token;
         // Move pages
-        const movePage = (pageName) => {
-            window.open(`${host}/${pageName}#${token}`);
-        };
+        // const movePage = (pageName) => {
+        //     window.open(`${host}/${pageName}#${token}`);
+        // };
     </script>
-    <script src="telegram.js"></script>
-  <script type="module" crossorigin src="assets/index-B8sYaAwo.js"></script>
-  <link rel="modulepreload" crossorigin href="assets/modulepreload-polyfill-B5Qt9EMX.js">
+<!--    <script src="telegram.js"></script>-->
+  <script type="module" crossorigin src="./assets/index-BRuWBVGt.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-B5Qt9EMX.js">
 </head>
 
 <body style="text-align: center; padding: 0; border: 0; margin: 0;">
@@ -99,7 +98,6 @@
         // }
 
         if (checkLineData()) {
-            console.log(lineUserData);
             initUnity();
         }
     });
