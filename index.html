@@ -97,9 +97,11 @@
         //     initUnity();
         // }
 
-        if (checkLineData()) {
-            initUnity();
-        }
+        checkLineData().then(result => {
+            if (result === true) {
+                initUnity();
+            }
+        });
     });
 </script>
 </body>
