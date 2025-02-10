@@ -41,16 +41,19 @@
         };
     </script>
     <script src="telegram.js"></script>
+  <script type="module" crossorigin src="/assets/index-B8DkbELn.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-B5Qt9EMX.js">
 </head>
 
 <body style="text-align: center; padding: 0; border: 0; margin: 0;">
 <div id="modal" class="modal">
-    <div id="login-button" style="display: none"></div>
-    <script async src="https://telegram.org/js/telegram-widget.js?7"
-            data-telegram-login="new9cproto_bot"
-            data-size="medium"
-            data-userpic="false"
-            data-onauth="onTelegramLogin(user)"></script>
+<!--    <div id="login-button" style="display: none"></div>-->
+<!--    <script async src="https://telegram.org/js/telegram-widget.js?7"-->
+<!--            data-telegram-login="new9cproto_bot"-->
+<!--            data-size="medium"-->
+<!--            data-userpic="false"-->
+<!--            data-onauth="onTelegramLogin(user)"></script>-->
+    <button id="line-login" onclick="lineAuth()">Login with line</button>
 </div>
 <canvas id="unity-canvas" tabindex="-1" style="background: linear-gradient(to bottom, #1aa698, #EBE3CD)"></canvas>
 <script src="Build/Build.loader.js"></script>
@@ -68,11 +71,12 @@
             // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
             // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
         }).then(instance => {
-            telegramLogin(instance);
+            lineLogin(instance);
         });
     }
 
     window.addEventListener('load', () => {
+        // initLineDapp();
         // Unity Game
         if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
             // Mobile device style: fill the whole browser client area with the game canvas:
@@ -89,7 +93,11 @@
             document.body.style.textAlign = "left";
         }
 
-        if (checkTelegramData()) {
+        // if (checkTelegramData()) {
+        //     initUnity();
+        // }
+
+        if (checkLineData()) {
             initUnity();
         }
     });
