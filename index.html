@@ -22,6 +22,7 @@
             justify-content: center;
             align-items: center;
             visibility: hidden; /* Initially hidden */
+            z-index: 1;
         }
     </style>
     <meta charset="utf-8">
@@ -32,7 +33,7 @@
         // const host = "http://localhost:3407";
     </script>
 
-<!--    <script src="https://telegram.org/js/telegram-web-app.js"></script>-->
+    <!--    <script src="https://telegram.org/js/telegram-web-app.js"></script>-->
     <script>
         let token;
         // Move pages
@@ -40,19 +41,19 @@
         //     window.open(`${host}/${pageName}#${token}`);
         // };
     </script>
-<!--    <script src="telegram.js"></script>-->
+    <!--    <script src="telegram.js"></script>-->
   <script type="module" crossorigin src="./assets/index-BRuWBVGt.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/modulepreload-polyfill-B5Qt9EMX.js">
 </head>
 
 <body style="text-align: center; padding: 0; border: 0; margin: 0;">
 <div id="modal" class="modal">
-<!--    <div id="login-button" style="display: none"></div>-->
-<!--    <script async src="https://telegram.org/js/telegram-widget.js?7"-->
-<!--            data-telegram-login="new9cproto_bot"-->
-<!--            data-size="medium"-->
-<!--            data-userpic="false"-->
-<!--            data-onauth="onTelegramLogin(user)"></script>-->
+    <!--    <div id="login-button" style="display: none"></div>-->
+    <!--    <script async src="https://telegram.org/js/telegram-widget.js?7"-->
+    <!--            data-telegram-login="new9cproto_bot"-->
+    <!--            data-size="medium"-->
+    <!--            data-userpic="false"-->
+    <!--            data-onauth="onTelegramLogin(user)"></script>-->
     <button id="line-login" onclick="lineAuth()">Login with line</button>
 </div>
 <canvas id="unity-canvas" tabindex="-1" style="background: linear-gradient(to bottom, #1aa698, #EBE3CD)"></canvas>
